@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import knight.nameless.helpers.AssetsHelper;
 
 public abstract class GameObject {
+
     protected final Rectangle actualBounds;
     protected final Sound actionSound;
     private final Texture sprite;
@@ -18,7 +19,6 @@ public abstract class GameObject {
     }
 
     public void draw(Batch batch) {
-
         batch.draw(sprite, actualBounds.x, actualBounds.y, actualBounds.width, actualBounds.height);
     }
 

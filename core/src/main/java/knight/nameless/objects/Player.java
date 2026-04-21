@@ -26,9 +26,9 @@ public class Player extends GameObject {
             actualBounds.x -= speed * deltaTime;
     }
 
-    public boolean hasCollisionWithTheBullet(AlienBullet alienBullet) {
+    public boolean hasCollisionWithTheBullet(Laser alienBullet) {
 
-        if (actualBounds.overlaps(alienBullet.getBounds())) {
+        if (actualBounds.overlaps(alienBullet.bounds)) {
 
             actionSound.play(0.6f);
 

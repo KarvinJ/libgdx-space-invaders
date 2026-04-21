@@ -20,6 +20,7 @@ import knight.nameless.helpers.AssetsHelper;
 import knight.nameless.helpers.GameDataHelper;
 
 public class MainMenuScreen extends ScreenAdapter {
+
     private final Space game;
     private final Skin skin;
     private final Stage stage;
@@ -40,8 +41,15 @@ public class MainMenuScreen extends ScreenAdapter {
 
         table.setFillParent(true);
 
-        Label pauseLabel = new Label("Your last score: " + GameDataHelper.loadPlayerScore(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Label scoreLabel = new Label("High Score: " + GameDataHelper.loadHighScore(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Label pauseLabel = new Label(
+            "Your last score: " + GameDataHelper.loadPlayerScore(),
+            new Label.LabelStyle(new BitmapFont(), Color.WHITE)
+        );
+
+        Label scoreLabel = new Label(
+            "High Score: " + GameDataHelper.loadHighScore(),
+            new Label.LabelStyle(new BitmapFont(), Color.WHITE)
+        );
 
         table.add(pauseLabel).expandX().padBottom(15);
         table.row();

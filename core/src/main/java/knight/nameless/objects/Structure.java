@@ -18,18 +18,15 @@ public class Structure extends GameObject {
             super.draw(batch);
     }
 
-    public boolean hasCollisionWithTheBullet(GameObject bullet, boolean isBullet) {
+    public boolean hasCollisionWithTheBullet(Laser bullet, boolean isBullet) {
 
-        if (!isDestroyed && actualBounds.overlaps(bullet.actualBounds)) {
+        if (!isDestroyed && actualBounds.overlaps(bullet.bounds)) {
 
             actionSound.play();
 
             hitCounter++;
 
-            if (isBullet)
-                ((Bullet) bullet).collision();
-            else
-                ((AlienBullet) bullet).collision();
+            bullet.collision();
 
             if (hitCounter == 5)
                 isDestroyed = true;

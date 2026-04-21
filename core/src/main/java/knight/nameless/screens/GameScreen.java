@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -23,14 +24,15 @@ public class GameScreen extends ScreenAdapter {
     private final Space game;
     private final OrthographicCamera camera;
     public SpriteBatch batch;
+    public ShapeRenderer shapeRenderer;
     private final Hud hud;
     private final PauseMenu pauseMenu;
     private final SpaceShip spaceShip;
     private final Player player;
     private final Array<Structure> structures;
     private final Array<Alien> aliens;
-    private final Array<Bullet> bullets;
-    private final Array<AlienBullet> alienBullets;
+    private final Array<Laser> bullets;
+    private final Array<Laser> alienBullets;
     private long lastAlienBulletTime;
     private float lastPlayerBulletTime;
     public static boolean isGamePaused;
@@ -42,6 +44,7 @@ public class GameScreen extends ScreenAdapter {
         camera = game.camera;
 
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
 
         player = new Player(new Rectangle(1000, 350, 32, 32));
 
@@ -106,34 +109,36 @@ public class GameScreen extends ScreenAdapter {
 
     private void update(float deltaTime) {
 
+        ScreenUtils.clear(0, 0, 0, 0);
+
         player.update(deltaTime);
 
         if(TimeUtils.nanoTime() - lastAlienBulletTime > 1000000000)
             spawnAlienBullet();
 
-        for (Iterator<AlienBullet> iterator = alienBullets.iterator(); iterator.hasNext();) {
+        for (Iterator<Laser> iterator = alienBullets.iterator(); iterator.hasNext();) {
 
-            AlienBullet alienBullet = iterator.next();
+            Laser alienBullet = iterator.next();
 
-            alienBullet.update(deltaTime);
+            alienBullet.bounds.y -= 400 * deltaTime;
 
-            if(player.hasCollisionWithTheBullet(alienBullet) || alienBullet.getBounds().y < 300)
+            if(player.hasCollisionWithTheBullet(alienBullet) || alienBullet.bounds.y < 300)
                 iterator.remove();
         }
 
         for (Structure structure : structures){
 
-            for (Iterator<Bullet> iterator = bullets.iterator(); iterator.hasNext();) {
+            for (Iterator<Laser> iterator = bullets.iterator(); iterator.hasNext();) {
 
-                Bullet bullet = iterator.next();
+                Laser bullet = iterator.next();
 
                 if (structure.hasCollisionWithTheBullet(bullet, true))
                     iterator.remove();
             }
 
-            for (Iterator<AlienBullet> iterator = alienBullets.iterator(); iterator.hasNext();) {
+            for (Iterator<Laser> iterator = alienBullets.iterator(); iterator.hasNext();) {
 
-                AlienBullet alienBullet = iterator.next();
+                Laser alienBullet = iterator.next();
 
                 if (structure.hasCollisionWithTheBullet(alienBullet, false))
                     iterator.remove();
@@ -146,9 +151,9 @@ public class GameScreen extends ScreenAdapter {
 
             alien.update(deltaTime);
 
-            for (Iterator<Bullet> bulletsIterator = bullets.iterator(); bulletsIterator.hasNext();) {
+            for (Iterator<Laser> bulletsIterator = bullets.iterator(); bulletsIterator.hasNext();) {
 
-                Bullet bullet = bulletsIterator.next();
+                Laser bullet = bulletsIterator.next();
 
                 if (alien.hasCollisionWithTheBullet(bullet)) {
 
@@ -156,7 +161,7 @@ public class GameScreen extends ScreenAdapter {
                     aliensIterator.remove();
                 }
 
-                else if (bullet.getBounds().y > 1000)
+                else if (bullet.bounds.y > 1000)
                     bulletsIterator.remove();
             }
         }
@@ -166,13 +171,13 @@ public class GameScreen extends ScreenAdapter {
 
         spaceShip.update(deltaTime);
 
-        for (Iterator<Bullet> bulletsIterator = bullets.iterator(); bulletsIterator.hasNext();) {
+        for (Iterator<Laser> bulletsIterator = bullets.iterator(); bulletsIterator.hasNext();) {
 
-            Bullet bullet = bulletsIterator.next();
+            Laser bullet = bulletsIterator.next();
 
-            bullet.update(deltaTime);
+            bullet.bounds.y += 400 * deltaTime;
 
-            if (spaceShip.hasCollisionWithTheBullet(bullet))
+            if (spaceShip.hasCollisionWithTheBullet(bullet) || bullet.bounds.y > 1000)
                 bulletsIterator.remove();
         }
     }
@@ -182,8 +187,7 @@ public class GameScreen extends ScreenAdapter {
         //shoot a bullet every 1 second
         if (TimeUtils.nanoTime() - lastPlayerBulletTime > 1000000000) {
 
-            bullets.add(new Bullet(new Vector2(player.getBounds().x, player.getBounds().y)));
-
+            bullets.add(new Laser(new Vector2(player.getBounds().x, player.getBounds().y)));
             lastPlayerBulletTime = TimeUtils.nanoTime();
         }
     }
@@ -194,7 +198,7 @@ public class GameScreen extends ScreenAdapter {
 
         Alien alien = aliens.get(randomAlienIndex);
 
-        alienBullets.add(new AlienBullet(new Vector2(alien.getBounds().x, alien.getBounds().y)));
+        alienBullets.add(new Laser(new Vector2(alien.getBounds().x, alien.getBounds().y)));
 
         lastAlienBulletTime = TimeUtils.nanoTime();
     }
@@ -202,19 +206,20 @@ public class GameScreen extends ScreenAdapter {
     private void finishTheGame() {
 
         GameDataHelper.saveHighScore();
-
         game.setScreen(new MainMenuScreen());
     }
 
     @Override
     public void render(float deltaTime) {
 
-        ScreenUtils.clear(0, 0, 0, 0);
-
         if (aliens.size == 0 || Player.livesQuantity < 0)
             finishTheGame();
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
+            isGamePaused = !isGamePaused;
+
         else if (!isGamePaused) {
+
             update(deltaTime);
             draw();
         } else {
@@ -222,15 +227,11 @@ public class GameScreen extends ScreenAdapter {
             pauseMenu.stage.act();
             pauseMenu.stage.draw();
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
-            isGamePaused = !isGamePaused;
     }
 
     private void draw() {
 
         batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
 
         spaceShip.draw(batch);
@@ -238,18 +239,23 @@ public class GameScreen extends ScreenAdapter {
         for (Alien alien : aliens)
             alien.draw(batch);
 
-        for (AlienBullet alienBullet : alienBullets)
-            alienBullet.draw(batch);
-
         for (Structure structure : structures)
             structure.draw(batch);
-
-        for (Bullet bullet : bullets)
-            bullet.draw(batch);
 
         player.draw(batch);
 
         batch.end();
+
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        for (Laser alienBullet : alienBullets)
+            alienBullet.draw(shapeRenderer);
+
+        for (Laser bullet : bullets)
+            bullet.draw(shapeRenderer);
+
+        shapeRenderer.end();
 
         hud.stage.draw();
     }

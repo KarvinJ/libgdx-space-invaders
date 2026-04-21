@@ -68,9 +68,9 @@ public class Alien extends GameObject {
             super.draw(batch);
     }
 
-    public boolean hasCollisionWithTheBullet(Bullet bullet) {
+    public boolean hasCollisionWithTheBullet(Laser bullet) {
 
-        if (!isDestroyed && actualBounds.overlaps(bullet.actualBounds)) {
+        if (!isDestroyed && actualBounds.overlaps(bullet.bounds)) {
             setToDestroy = true;
 
             Hud.addScore(alienPoints);

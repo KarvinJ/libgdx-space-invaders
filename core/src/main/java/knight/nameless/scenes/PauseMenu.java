@@ -18,6 +18,7 @@ import knight.nameless.helpers.GameDataHelper;
 import knight.nameless.screens.GameScreen;
 
 public class PauseMenu {
+
     private final Space game;
     public final Stage stage;
     private final Skin skin;
@@ -35,7 +36,11 @@ public class PauseMenu {
         table.setFillParent(true);
 
         Label pauseLabel = new Label("Pause Menu", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Label scoreLabel = new Label("High Score: " + GameDataHelper.loadHighScore(), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        Label scoreLabel = new Label(
+            "High Score: " + GameDataHelper.loadHighScore(),
+            new Label.LabelStyle(new BitmapFont(), Color.WHITE)
+        );
 
         table.add(pauseLabel).expandX().padBottom(15);
         table.row();

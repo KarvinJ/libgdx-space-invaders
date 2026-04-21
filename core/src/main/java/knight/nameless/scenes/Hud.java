@@ -11,6 +11,7 @@ import knight.nameless.Space;
 import knight.nameless.objects.Player;
 
 public class Hud {
+
     public final Stage stage;
     private static Label scoreLabel;
     private static Label livesLabel;
@@ -43,14 +44,12 @@ public class Hud {
     public static void addScore(int brickPoints) {
 
         Player.score += brickPoints;
-
         scoreLabel.setText(Player.score);
     }
 
     public static void takeAvailableHealth() {
 
         Player.livesQuantity -= 1;
-
         livesLabel.setText(Player.livesQuantity);
     }
 

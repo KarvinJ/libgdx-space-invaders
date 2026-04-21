@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import knight.nameless.screens.MainMenuScreen;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Space extends Game {
     public static Space INSTANCE;
     public OrthographicCamera camera;
@@ -36,7 +35,11 @@ public class Space extends Game {
 
         camera.position.set(screenWidth, screenHeight, 0);
 
-        uiSkin = new AssetDescriptor<>("ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("ui/uiskin.atlas"));
+        uiSkin = new AssetDescriptor<>(
+            "ui/uiskin.json",
+            Skin.class,
+            new SkinLoader.SkinParameter("ui/uiskin.atlas")
+        );
 
         setScreen(new MainMenuScreen());
     }
