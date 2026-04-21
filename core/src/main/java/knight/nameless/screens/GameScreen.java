@@ -31,8 +31,8 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final Array<Structure> structures;
     private final Array<Alien> aliens;
-    private final Array<Laser> bullets;
-    private final Array<Laser> alienBullets;
+    private final Array<Laser> lasers;
+    private final Array<Laser> alienLasers;
     private long lastAlienBulletTime;
     private float lastPlayerBulletTime;
     public static boolean isGamePaused;
@@ -59,8 +59,8 @@ public class GameScreen extends ScreenAdapter {
 
         aliens = createAliens();
 
-        bullets = new Array<>();
-        alienBullets = new Array<>();
+        lasers = new Array<>();
+        alienLasers = new Array<>();
 
         spaceShip = new SpaceShip();
 
@@ -116,7 +116,7 @@ public class GameScreen extends ScreenAdapter {
         if(TimeUtils.nanoTime() - lastAlienBulletTime > 1000000000)
             spawnAlienBullet();
 
-        for (Iterator<Laser> iterator = alienBullets.iterator(); iterator.hasNext();) {
+        for (Iterator<Laser> iterator = alienLasers.iterator(); iterator.hasNext();) {
 
             Laser alienBullet = iterator.next();
 
@@ -128,7 +128,7 @@ public class GameScreen extends ScreenAdapter {
 
         for (Structure structure : structures){
 
-            for (Iterator<Laser> iterator = bullets.iterator(); iterator.hasNext();) {
+            for (Iterator<Laser> iterator = lasers.iterator(); iterator.hasNext();) {
 
                 Laser bullet = iterator.next();
 
@@ -136,7 +136,7 @@ public class GameScreen extends ScreenAdapter {
                     iterator.remove();
             }
 
-            for (Iterator<Laser> iterator = alienBullets.iterator(); iterator.hasNext();) {
+            for (Iterator<Laser> iterator = alienLasers.iterator(); iterator.hasNext();) {
 
                 Laser alienBullet = iterator.next();
 
@@ -151,7 +151,7 @@ public class GameScreen extends ScreenAdapter {
 
             alien.update(deltaTime);
 
-            for (Iterator<Laser> bulletsIterator = bullets.iterator(); bulletsIterator.hasNext();) {
+            for (Iterator<Laser> bulletsIterator = lasers.iterator(); bulletsIterator.hasNext();) {
 
                 Laser bullet = bulletsIterator.next();
 
@@ -171,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
 
         spaceShip.update(deltaTime);
 
-        for (Iterator<Laser> bulletsIterator = bullets.iterator(); bulletsIterator.hasNext();) {
+        for (Iterator<Laser> bulletsIterator = lasers.iterator(); bulletsIterator.hasNext();) {
 
             Laser bullet = bulletsIterator.next();
 
@@ -187,7 +187,7 @@ public class GameScreen extends ScreenAdapter {
         //shoot a bullet every 1 second
         if (TimeUtils.nanoTime() - lastPlayerBulletTime > 1000000000) {
 
-            bullets.add(new Laser(new Vector2(player.getBounds().x, player.getBounds().y)));
+            lasers.add(new Laser(new Vector2(player.getBounds().x, player.getBounds().y)));
             lastPlayerBulletTime = TimeUtils.nanoTime();
         }
     }
@@ -198,7 +198,7 @@ public class GameScreen extends ScreenAdapter {
 
         Alien alien = aliens.get(randomAlienIndex);
 
-        alienBullets.add(new Laser(new Vector2(alien.getBounds().x, alien.getBounds().y)));
+        alienLasers.add(new Laser(new Vector2(alien.getBounds().x, alien.getBounds().y)));
 
         lastAlienBulletTime = TimeUtils.nanoTime();
     }
@@ -249,10 +249,10 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        for (Laser alienBullet : alienBullets)
+        for (Laser alienBullet : alienLasers)
             alienBullet.draw(shapeRenderer);
 
-        for (Laser bullet : bullets)
+        for (Laser bullet : lasers)
             bullet.draw(shapeRenderer);
 
         shapeRenderer.end();
