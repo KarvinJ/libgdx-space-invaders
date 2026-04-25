@@ -2,7 +2,6 @@ package knight.nameless.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Rectangle;
 import knight.nameless.scenes.Hud;
 
 public class Player extends GameObject {

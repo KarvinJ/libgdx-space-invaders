@@ -1,7 +1,6 @@
 package knight.nameless.objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Rectangle;
 
 public class Structure extends GameObject {
 
