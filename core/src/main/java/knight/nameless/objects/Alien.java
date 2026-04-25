@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import knight.nameless.scenes.Hud;
 
 public class Alien extends GameObject {
+
     private boolean isDestroyed;
     private boolean setToDestroy;
     private final int alienPoints;

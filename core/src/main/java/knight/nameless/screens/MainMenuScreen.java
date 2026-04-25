@@ -33,7 +33,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         skin = AssetsHelper.loadUiSkin();
 
-        viewport = new ExtendViewport(game.screenWidth, game.screenHeight);
+        viewport = new ExtendViewport(game.SCREEN_WIDTH, game.SCREEN_HEIGHT);
 
         stage = new Stage(viewport);
 

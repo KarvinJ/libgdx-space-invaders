@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import knight.nameless.scenes.Hud;
 
 public class SpaceShip extends GameObject {
+
     private boolean isDestroyed;
     private float stateTimer;
     private boolean shouldGoRight;

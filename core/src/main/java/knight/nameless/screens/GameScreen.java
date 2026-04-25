@@ -3,6 +3,7 @@ package knight.nameless.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import knight.nameless.Space;
 import knight.nameless.helpers.GameDataHelper;
 import knight.nameless.objects.*;
@@ -21,8 +23,10 @@ import knight.nameless.scenes.PauseMenu;
 import java.util.Iterator;
 
 public class GameScreen extends ScreenAdapter {
+
     private final Space game;
-    private final OrthographicCamera camera;
+    public OrthographicCamera camera;
+    public ExtendViewport viewport;
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
     private final Hud hud;
@@ -40,8 +44,6 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen() {
 
         game = Space.INSTANCE;
-
-        camera = game.camera;
 
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -67,10 +69,18 @@ public class GameScreen extends ScreenAdapter {
         hud = new Hud();
         pauseMenu = new PauseMenu();
 
-        isGamePaused = false;
+        camera = new OrthographicCamera();
+        camera.position.set(game.SCREEN_WIDTH, game.SCREEN_HEIGHT, 0);
+        viewport = new ExtendViewport(game.SCREEN_WIDTH, game.SCREEN_HEIGHT, camera);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 
     private Array<Alien> createAliens() {
+
         int positionX;
         int positionY = 0;
         int alienPoints = 8;
@@ -100,11 +110,6 @@ public class GameScreen extends ScreenAdapter {
         }
 
         return temporalAliens;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        game.viewport.update(width, height);
     }
 
     private void update(float deltaTime) {
@@ -248,6 +253,8 @@ public class GameScreen extends ScreenAdapter {
 
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.setColor(Color.YELLOW);
 
         for (Laser alienBullet : alienLasers)
             alienBullet.draw(shapeRenderer);

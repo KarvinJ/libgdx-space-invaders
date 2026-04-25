@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import knight.nameless.scenes.Hud;
 
 public class Player extends GameObject {
+
     public static int score;
     public static int livesQuantity;
     private final int speed;

@@ -27,7 +27,7 @@ public class PauseMenu {
 
         game = Space.INSTANCE;
 
-        Viewport viewport = new ExtendViewport(game.screenWidth, game.screenHeight);
+        Viewport viewport = new ExtendViewport(game.SCREEN_WIDTH, game.SCREEN_HEIGHT);
 
         stage = new Stage(viewport);
 
