@@ -93,11 +93,11 @@ public class GameScreen extends ScreenAdapter {
             positionX = 0;
 
             if (i == 0)
-                spritePath = "images/blue-alien.png";
+                spritePath = "images/alien_1.png";
             else if (i >= 3)
-                spritePath = "images/green-alien.png";
+                spritePath = "images/alien_2.png";
             else
-                spritePath = "images/red-alien.png";
+                spritePath = "images/alien_3.png";
 
             for (int j = 0; j < 11; j++) {
 
@@ -114,7 +114,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void update(float deltaTime) {
 
-        ScreenUtils.clear(0, 0, 0, 0);
+        ScreenUtils.clear(0.11f, 0.11f, 0.11f, 1);
 
         player.update(deltaTime);
 

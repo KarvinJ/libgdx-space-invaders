@@ -13,9 +13,12 @@ public abstract class GameObject {
     private final Texture sprite;
 
     protected GameObject(Rectangle bounds, String soundPath, String spritePath) {
-        actualBounds = bounds;
-        actionSound = AssetsHelper.loadSound(soundPath);
+
         sprite = new Texture(spritePath);
+        actualBounds = bounds;
+        actualBounds.setSize(sprite.getWidth(), sprite.getHeight());
+        actionSound = AssetsHelper.loadSound(soundPath);
+
     }
 
     public void draw(Batch batch) {

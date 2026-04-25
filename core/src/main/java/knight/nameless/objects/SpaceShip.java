@@ -14,7 +14,7 @@ public class SpaceShip extends GameObject {
     public SpaceShip() {
         super(
             new Rectangle(1600, 900, 32, 32),
-            "okay.wav", "images/alien-ship.png"
+            "okay.wav", "images/mystery.png"
         );
         velocityX = 150;
     }

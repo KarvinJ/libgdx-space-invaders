@@ -12,7 +12,7 @@ public class Player extends GameObject {
     private final int speed;
 
     public Player(Rectangle bounds) {
-        super(bounds,  "laser.wav", "images/player-ship.png");
+        super(bounds,  "laser.wav", "images/spaceship.png");
         score = 0;
         livesQuantity = 2;
         speed = 400;
