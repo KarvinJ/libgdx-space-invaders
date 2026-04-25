@@ -10,8 +10,6 @@
 
   <!-- "Inherits" lines are how GWT knows where to look for code and configuration in other projects or libraries. -->
   <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
-  <inherits name="com.badlogic.gdx.controllers" />
-  <inherits name="com.badlogic.gdx.controllers.controllers-gwt" />
   <inherits name="knight.nameless.Space" />
 
   <!-- You must change this if you rename packages later, or rename GwtLauncher. -->
