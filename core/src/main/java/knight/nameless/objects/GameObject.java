@@ -17,7 +17,6 @@ public abstract class GameObject {
         sprite = new Texture(spritePath);
         actualBounds = new Rectangle(positionX, positionY, sprite.getWidth(), sprite.getHeight());
         actionSound = AssetsHelper.loadSound(soundPath);
-
     }
 
     public void draw(Batch batch) {
