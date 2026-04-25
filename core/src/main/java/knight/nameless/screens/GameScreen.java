@@ -48,12 +48,12 @@ public class GameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
-        player = new Player(new Rectangle(1000, 350, 32, 32));
+        player = new Player(1000, 350);
 
-        Structure structure = new Structure(new Rectangle(650, 450, 48, 32));
-        Structure structure2 = new Structure(new Rectangle(900, 450, 48, 32));
-        Structure structure3 = new Structure(new Rectangle(1150, 450, 48, 32));
-        Structure structure4 = new Structure(new Rectangle(1400, 450, 48, 32));
+        Structure structure = new Structure(650, 450);
+        Structure structure2 = new Structure(900, 450);
+        Structure structure3 = new Structure(1150, 450);
+        Structure structure4 = new Structure(1400, 450);
 
         structures = new Array<>();
 

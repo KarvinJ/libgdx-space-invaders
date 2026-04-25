@@ -12,11 +12,10 @@ public abstract class GameObject {
     protected final Sound actionSound;
     private final Texture sprite;
 
-    protected GameObject(Rectangle bounds, String soundPath, String spritePath) {
+    protected GameObject(float positionX, float positionY, String soundPath, String spritePath) {
 
         sprite = new Texture(spritePath);
-        actualBounds = bounds;
-        actualBounds.setSize(sprite.getWidth(), sprite.getHeight());
+        actualBounds = new Rectangle(positionX, positionY, sprite.getWidth(), sprite.getHeight());
         actionSound = AssetsHelper.loadSound(soundPath);
 
     }

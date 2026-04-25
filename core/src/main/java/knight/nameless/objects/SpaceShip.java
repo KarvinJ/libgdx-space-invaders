@@ -13,9 +13,10 @@ public class SpaceShip extends GameObject {
 
     public SpaceShip() {
         super(
-            new Rectangle(1600, 900, 32, 32),
+            1600, 900,
             "okay.wav", "images/mystery.png"
         );
+
         velocityX = 150;
     }
 

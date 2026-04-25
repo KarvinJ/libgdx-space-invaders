@@ -8,8 +8,8 @@ public class Structure extends GameObject {
     private int hitCounter;
     private boolean isDestroyed;
 
-    public Structure(Rectangle bounds) {
-        super(bounds, "break.ogg", "images/structure.png");
+    public Structure(float positionX, float positionY) {
+        super(positionX, positionY, "break.ogg", "images/structure.png");
     }
 
     @Override

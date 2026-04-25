@@ -11,8 +11,8 @@ public class Player extends GameObject {
     public static int livesQuantity;
     private final int speed;
 
-    public Player(Rectangle bounds) {
-        super(bounds,  "laser.wav", "images/spaceship.png");
+    public Player(float positionX, float positionY) {
+        super(positionX, positionY,  "laser.wav", "images/spaceship.png");
         score = 0;
         livesQuantity = 2;
         speed = 400;

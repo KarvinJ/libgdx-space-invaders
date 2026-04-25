@@ -16,10 +16,7 @@ public class Alien extends GameObject {
     private boolean shouldGoDown;
 
     public Alien(int positionX, int positionY, String spritePath, int points) {
-        super(
-            new Rectangle(720 + positionX, 850 - positionY, 32, 32),
-            "okay.wav", spritePath
-        );
+        super(720 + positionX, 850 - positionY, "okay.wav", spritePath);
         alienPoints = points;
         velocityX = 20;
     }
