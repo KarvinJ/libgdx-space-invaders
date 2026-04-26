@@ -48,20 +48,11 @@ public class MainMenuScreen extends ScreenAdapter {
         fontTexture = new Texture("fonts/test.png");
         fontTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         font = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), new TextureRegion(fontTexture));
-        font.getData().scale(1f);
-
-        Label pauseLabel = new Label(
-            "Your last score: " + GameDataHelper.loadPlayerScore(),
-            new Label.LabelStyle(font, Color.WHITE)
-        );
 
         Label scoreLabel = new Label(
             "High Score: " + GameDataHelper.loadHighScore(),
             new Label.LabelStyle(font, Color.WHITE)
         );
-
-        table.add(pauseLabel).expandX().padBottom(15);
-        table.row();
 
         table.add(scoreLabel).expandX().padBottom(15);
         table.row();

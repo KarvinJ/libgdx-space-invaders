@@ -43,7 +43,7 @@ public class PauseMenu {
         fontTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         font = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), new TextureRegion(fontTexture));
 
-        Label pauseLabel = new Label("Pause Menu", new Label.LabelStyle(font, Color.RED));
+        Label pauseLabel = new Label("Pause Menu", new Label.LabelStyle(font, Color.WHITE));
 
         Label scoreLabel = new Label(
             "High Score: " + GameDataHelper.loadHighScore(),
