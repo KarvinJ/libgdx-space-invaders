@@ -1,7 +1,10 @@
 package knight.nameless.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -15,6 +18,8 @@ public class Hud {
     public final Stage stage;
     private static Label scoreLabel;
     private static Label livesLabel;
+    private final BitmapFont font;
+    private final Texture fontTexture;
 
     public Hud() {
 
@@ -30,9 +35,13 @@ public class Hud {
 
         table.setFillParent(true);
 
-        livesLabel = new Label("2", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        Label worldLabel = new Label("LEVEL 01", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        fontTexture = new Texture("fonts/test.png");
+        fontTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), new TextureRegion(fontTexture));
+
+        livesLabel = new Label("2", new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label("0", new Label.LabelStyle(font, Color.WHITE));
+        Label worldLabel = new Label("LEVEL 01", new Label.LabelStyle(font, Color.WHITE));
 
         table.add(livesLabel).expandX().padTop(10);
         table.add(scoreLabel).expandX().padTop(10);
@@ -54,6 +63,8 @@ public class Hud {
     }
 
     public void dispose(){
+        font.dispose();
+        fontTexture.dispose();
         stage.dispose();
     }
 }

@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -22,6 +24,8 @@ import knight.nameless.helpers.GameDataHelper;
 public class MainMenuScreen extends ScreenAdapter {
 
     private final Space game;
+    private final BitmapFont font;
+    private final Texture fontTexture;
     private final Skin skin;
     private final Stage stage;
     private final Viewport viewport;
@@ -41,14 +45,19 @@ public class MainMenuScreen extends ScreenAdapter {
 
         table.setFillParent(true);
 
+        fontTexture = new Texture("fonts/test.png");
+        fontTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font = new BitmapFont(Gdx.files.internal("fonts/test.fnt"), new TextureRegion(fontTexture));
+        font.getData().scale(1f);
+
         Label pauseLabel = new Label(
             "Your last score: " + GameDataHelper.loadPlayerScore(),
-            new Label.LabelStyle(new BitmapFont(), Color.WHITE)
+            new Label.LabelStyle(font, Color.WHITE)
         );
 
         Label scoreLabel = new Label(
             "High Score: " + GameDataHelper.loadHighScore(),
-            new Label.LabelStyle(new BitmapFont(), Color.WHITE)
+            new Label.LabelStyle(font, Color.WHITE)
         );
 
         table.add(pauseLabel).expandX().padBottom(15);
@@ -116,6 +125,8 @@ public class MainMenuScreen extends ScreenAdapter {
     @Override
     public void dispose() {
 
+        font.dispose();
+        fontTexture.dispose();
         stage.dispose();
         skin.dispose();
         music.dispose();
